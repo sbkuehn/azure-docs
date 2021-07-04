@@ -9,6 +9,8 @@ ms.date: 1/26/2021
 ---
 # Server parameters in Azure Database for MySQL
 
+[!INCLUDE[applies-to-mysql-single-server](includes/applies-to-mysql-single-server.md)]
+
 This article provides considerations and guidelines for configuring server parameters in Azure Database for MySQL.
 
 ## What are server parameters? 
@@ -25,8 +27,7 @@ Refer to the following sections below to learn more about the limits of the seve
 
 ### Thread pools
 
-MySQL traditionally assigns a thread for every client connection. As the number of concurrent users grows, there is a corresponding drop in 
-formance. Many active threads can impact the performance significantly due to increased context switching, thread contention, and bad locality for CPU caches.
+MySQL traditionally assigns a thread for every client connection. As the number of concurrent users grows, there is a corresponding drop in performance. Many active threads can impact the performance significantly due to increased context switching, thread contention, and bad locality for CPU caches.
 
 Thread pools which is a server side feature and distinct from connection pooling, maximize performance by introducing a dynamic pool of worker thread that can be used to limit the number of active threads running on the server and minimize thread churn. This helps ensure that a burst of connections will not cause the server to run out of resources or crash with an out of memory error. Thread pools are most efficient for short queries and CPU intensive workloads, for example OLTP workloads.
 
@@ -267,7 +268,7 @@ It is also important to note that improved performance comes at the expense of l
 To save the state of the buffer pool at server shutdown set server parameter `innodb_buffer_pool_dump_at_shutdown` to `ON`. Similarly, set server parameter `innodb_buffer_pool_load_at_startup` to `ON` to restore the buffer pool state at server startup. You can control the impact on start-up/restart by lowering and fine tuning the value of server parameter `innodb_buffer_pool_dump_pct`, By default, this parameter is set to `25`.
 
 > [!Note]
-> InnoDB buffer pool warmup parameters are only supported in general purpose storage servers with up to 16-TB storage. Learn more about [Azure Database for MySQL storage options here](https://docs.microsoft.com/azure/mysql/concepts-pricing-tiers#storage).
+> InnoDB buffer pool warmup parameters are only supported in general purpose storage servers with up to 16-TB storage. Learn more about [Azure Database for MySQL storage options here](./concepts-pricing-tiers.md#storage).
 
 ### time_zone
 
